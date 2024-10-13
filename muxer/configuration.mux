@@ -1,0 +1,62 @@
+general {
+    dabmode 1
+    nbframes 0
+    syslog false
+    tist true
+}
+
+ensemble {
+    id 0xcfff
+    ecc 0xe1
+
+    local-time-offset auto
+    reconfig-counter hash
+
+    label "Test DAB Mux"
+    shortlabel "Test DAB"
+}
+
+services {
+    srv-birdsong {
+        id 0xcfff
+
+        label "Birdsong"
+        shortlabel "Birdsong"
+    }
+}
+
+subchannels {
+    sub-birdsong {
+        type dabplus
+        bitrate 48
+        id 1
+        protection 3
+
+        inputproto edi
+        inputuri "tcp://0.0.0.0:9000"
+
+        buffer-management timestamped
+        buffer 500
+    }
+}
+
+components {
+    comp-birdsong {
+        service srv-birdsong
+        subchannel sub-birdsong
+    }
+}
+
+outputs {
+    edi {
+        destinations {
+            edi_tcp {
+                protocol tcp
+                listenport 9200
+            }
+        }
+    }
+
+    throttle "simul://"
+}
+

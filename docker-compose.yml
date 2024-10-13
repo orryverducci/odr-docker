@@ -2,6 +2,17 @@ services:
   encoder:
     image: orryverducci/dabenc:latest
     build: ./encoder
+    depends_on:
+      - muxer
     environment:
       - TZ=Europe/London
     command: -v https://a1.radio.co/s5c5da6a36/listen -r 32000 -c 2 -e muxer:9000 -l -b 48
+  
+  muxer:
+    image: orryverducci/dabmux:latest
+    build: ./muxer
+    environment:
+      - TZ=Europe/London
+    volumes:
+      - ./muxer/configuration.mux:/data/configuration.mux
+    command: /data/configuration.mux
