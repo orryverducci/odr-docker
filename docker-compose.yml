@@ -1,0 +1,7 @@
+services:
+  encoder:
+    image: orryverducci/dabenc:latest
+    build: ./encoder
+    environment:
+      - TZ=Europe/London
+    command: -v https://url/ -r 32000 -c 2 -e localhost:9000 -l -b 32

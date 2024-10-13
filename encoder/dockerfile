@@ -1,0 +1,41 @@
+FROM debian:bookworm AS builder-audio
+
+WORKDIR /build
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    && apt-get update \
+    && apt-get install -y \
+    automake \
+    build-essential \
+    git \
+    libcurl4-openssl-dev \
+    libtool \
+    libvlc-dev \
+    libzmq3-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/Opendigitalradio/ODR-AudioEnc.git
+
+RUN cd ODR-AudioEnc \
+    && ./bootstrap \
+    && ./configure --enable-vlc --prefix=/build/output
+
+RUN cd ODR-AudioEnc \
+    && make \
+    && make install
+
+FROM debian:bookworm
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    && apt-get update \
+    && apt-get install -y \
+    libcurl4 \
+    libvlc5 \
+    libzmq5 \
+    vlc-plugin-base \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder-audio /build/output/bin/odr-audioenc /usr/bin/
+
+ENTRYPOINT ["odr-audioenc"]
