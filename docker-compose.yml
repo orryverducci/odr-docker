@@ -4,4 +4,4 @@ services:
     build: ./encoder
     environment:
       - TZ=Europe/London
-    command: -v https://url/ -r 32000 -c 2 -e localhost:9000 -l -b 32
+    command: -v https://a1.radio.co/s5c5da6a36/listen -r 32000 -c 2 -e muxer:9000 -l -b 48
