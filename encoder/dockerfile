@@ -38,6 +38,7 @@ FROM debian:bookworm-slim
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y \
+    dumb-init \
     libcurl4 \
     libvlc5 \
     libzmq5 \
@@ -48,4 +49,4 @@ COPY --from=builder-audio /build/output/bin/odr-audioenc /usr/bin/
 
 COPY --chmod=0755 run.sh /run.sh
 
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["dumb-init", "sh", "/run.sh"]

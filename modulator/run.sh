@@ -13,7 +13,7 @@ else
 fi
 
 if [ $RTLTCP = true ]; then
-    exec odr-dabmod $CONF_FILE "$@" | node /server.mjs
+    odr-dabmod $CONF_FILE "$@" | exec node /server.mjs
 else
     exec odr-dabmod $CONF_FILE "$@"
 fi
