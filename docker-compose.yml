@@ -5,8 +5,11 @@ services:
     depends_on:
       - muxer
     environment:
+      - ENC_BITRATE=48
+      - ENC_MUX=tcp://muxer:9000
+      - ENC_SAMPLERATE=48000
+      - ENC_SOURCE=https://a1.radio.co/s5c5da6a36/listen
       - TZ=Europe/London
-    command: -v https://a1.radio.co/s5c5da6a36/listen -r 32000 -c 2 -e muxer:9000 -l -b 48
   
   muxer:
     image: orryverducci/dabmux:latest
@@ -15,4 +18,3 @@ services:
       - TZ=Europe/London
     volumes:
       - ./muxer/configuration.mux:/data/configuration.mux
-    command: /data/configuration.mux

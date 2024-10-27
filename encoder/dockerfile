@@ -38,4 +38,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 COPY --from=builder-audio /build/output/bin/odr-audioenc /usr/bin/
 
-ENTRYPOINT ["odr-audioenc"]
+COPY --chmod=0755 run.sh /run.sh
+
+ENTRYPOINT ["/run.sh"]

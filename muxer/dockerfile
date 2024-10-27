@@ -37,4 +37,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
 
 COPY --from=builder /build/output/bin/odr-dabmux /usr/bin/
 
-ENTRYPOINT ["odr-dabmux"]
+COPY --chmod=0755 run.sh /run.sh
+
+ENTRYPOINT ["/run.sh"]
