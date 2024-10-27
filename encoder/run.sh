@@ -68,4 +68,4 @@ fi
 
 # Run encoder
 
-odr-padenc -o pad -t $DLS_FILE & exec odr-audioenc -v $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -p 34 -P pad -e $MUX "$@"
+odr-padenc -o pad -t $DLS_FILE & exec odr-audioenc -G $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -p 34 -P pad -e $MUX "$@"
