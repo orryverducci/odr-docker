@@ -3,6 +3,7 @@
 
 docker-compose.yml
 configuration.mux
+configuration.ini
 
 ### Windows ###
 ## Ignore Windows temporary and system files.

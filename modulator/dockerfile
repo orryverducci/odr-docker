@@ -1,0 +1,51 @@
+####################
+# Builder stage
+####################
+
+FROM debian:bookworm-slim AS builder
+
+WORKDIR /build
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    && apt-get update \
+    && apt-get install -y \
+    automake \
+    build-essential \
+    git \
+    libfftw3-dev \
+    libuhd-dev \
+    libzmq3-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/Opendigitalradio/ODR-DabMod.git
+
+RUN cd ODR-DabMod \
+    && ./bootstrap.sh \
+    && ./configure --prefix=/build/output
+
+RUN cd ODR-DabMod \
+    && make \
+    && make install
+
+####################
+# Runtime image
+####################
+
+FROM node:bookworm-slim
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    && apt-get update \
+    && apt-get install -y \
+    libfftw3-single3 \
+    libuhd4.3.0 \
+    libzmq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /build/output/bin/odr-dabmod /usr/bin/
+
+COPY --chmod=0755 run.sh /run.sh
+
+COPY --chmod=0755 server.mjs /server.mjs
+
+ENTRYPOINT ["/run.sh"]
