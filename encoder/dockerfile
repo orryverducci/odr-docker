@@ -1,4 +1,4 @@
-FROM debian:bookworm AS builder-audio
+FROM debian:bookworm-slim AS builder-audio
 
 WORKDIR /build
 
@@ -25,7 +25,7 @@ RUN cd ODR-AudioEnc \
     && make \
     && make install
 
-FROM debian:bookworm
+FROM debian:bookworm-slim
 
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
