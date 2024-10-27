@@ -1,3 +1,7 @@
+####################
+# Builder stage
+####################
+
 FROM debian:bookworm-slim AS builder
 
 WORKDIR /build
@@ -24,6 +28,10 @@ RUN cd ODR-DabMux \
 RUN cd ODR-DabMux \
     && make \
     && make install
+
+####################
+# Runtime image
+####################
 
 FROM debian:bookworm-slim
 

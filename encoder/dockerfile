@@ -1,3 +1,7 @@
+####################
+# Builder stage
+####################
+
 FROM debian:bookworm-slim AS builder-audio
 
 WORKDIR /build
@@ -24,6 +28,10 @@ RUN cd ODR-AudioEnc \
 RUN cd ODR-AudioEnc \
     && make \
     && make install
+
+####################
+# Runtime image
+####################
 
 FROM debian:bookworm-slim
 
