@@ -56,4 +56,4 @@ fi
 
 # Run encoder
 
-exec odr-audioenc -v $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -T 0 -e $MUX "$@"
+exec odr-audioenc -v $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -e $MUX "$@"

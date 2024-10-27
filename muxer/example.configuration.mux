@@ -42,8 +42,7 @@ subchannels {
         inputproto edi
         inputuri "tcp://0.0.0.0:9000"
 
-        buffer-management timestamped
-        buffer 500
+        buffer-management prebuffering
     }
 
     sub-birdsongplus {
@@ -55,8 +54,7 @@ subchannels {
         inputproto edi
         inputuri "tcp://0.0.0.0:9001"
 
-        buffer-management timestamped
-        buffer 500
+        buffer-management prebuffering
     }
 }
 
