@@ -6,7 +6,7 @@ general {
 }
 
 ensemble {
-    id 0xcfff
+    id 0xffff
     ecc 0xe1
 
     local-time-offset auto
@@ -18,22 +18,42 @@ ensemble {
 
 services {
     srv-birdsong {
-        id 0xcfff
+        id 0xfff1
 
-        label "Birdsong"
+        label "Birdsong DAB"
         shortlabel "Birdsong"
+    }
+
+    srv-birdsongplus {
+        id 0xfff2
+
+        label "Birdsong DAB+"
+        shortlabel "Birdsng+"
     }
 }
 
 subchannels {
     sub-birdsong {
-        type dabplus
-        bitrate 48
+        type audio
+        bitrate 128
         id 1
         protection 3
 
         inputproto edi
         inputuri "tcp://0.0.0.0:9000"
+
+        buffer-management timestamped
+        buffer 500
+    }
+
+    sub-birdsongplus {
+        type dabplus
+        bitrate 48
+        id 2
+        protection 3
+
+        inputproto edi
+        inputuri "tcp://0.0.0.0:9001"
 
         buffer-management timestamped
         buffer 500
@@ -44,6 +64,11 @@ components {
     comp-birdsong {
         service srv-birdsong
         subchannel sub-birdsong
+    }
+
+    comp-birdsongplus {
+        service srv-birdsongplus
+        subchannel sub-birdsongplus
     }
 }
 
@@ -59,4 +84,3 @@ outputs {
 
     throttle "simul://"
 }
-

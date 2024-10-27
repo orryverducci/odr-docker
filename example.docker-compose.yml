@@ -20,14 +20,25 @@ services:
     volumes:
       - ./modulator/configuration.ini:/data/configuration.ini
 
-  encoder:
+  encoder1: &encoder
     image: orryverducci/dabenc:latest
     build: ./encoder
     depends_on:
       - muxer
     environment:
-      - ENC_BITRATE=48
+      - ENC_BITRATE=128
+      - ENC_DABPLUS=false
       - ENC_MUX=tcp://muxer:9000
       - ENC_SAMPLERATE=48000
+      - ENC_SOURCE=https://a1.radio.co/s5c5da6a36/listen
+      - TZ=Europe/London
+
+  encoder2:
+    <<: *encoder
+    environment:
+      - ENC_BITRATE=48
+      - ENC_DABPLUS=true
+      - ENC_MUX=tcp://muxer:9001
+      - ENC_SAMPLERATE=32000
       - ENC_SOURCE=https://a1.radio.co/s5c5da6a36/listen
       - TZ=Europe/London
