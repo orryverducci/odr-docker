@@ -1,4 +1,12 @@
 services:
+  muxer:
+    image: orryverducci/dabmux:latest
+    build: ./muxer
+    environment:
+      - TZ=Europe/London
+    volumes:
+      - ./muxer/configuration.mux:/data/configuration.mux
+
   encoder:
     image: orryverducci/dabenc:latest
     build: ./encoder
@@ -10,11 +18,3 @@ services:
       - ENC_SAMPLERATE=48000
       - ENC_SOURCE=https://a1.radio.co/s5c5da6a36/listen
       - TZ=Europe/London
-  
-  muxer:
-    image: orryverducci/dabmux:latest
-    build: ./muxer
-    environment:
-      - TZ=Europe/London
-    volumes:
-      - ./muxer/configuration.mux:/data/configuration.mux
