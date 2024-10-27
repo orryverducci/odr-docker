@@ -1,3 +1,9 @@
+### Configuration files ###
+## Ignore non-example configuration files.
+
+docker-compose.yml
+configuration.mux
+
 ### Windows ###
 ## Ignore Windows temporary and system files.
 

@@ -7,6 +7,18 @@ services:
     volumes:
       - ./muxer/configuration.mux:/data/configuration.mux
 
+  modulator:
+    image: orryverducci/dabmod:latest
+    build: ./modulator
+    depends_on:
+      - muxer
+    environment:
+      - TZ=Europe/London
+    ports:
+      - 1234:1234
+    volumes:
+      - ./modulator/configuration.ini:/data/configuration.ini
+
   encoder:
     image: orryverducci/dabenc:latest
     build: ./encoder
