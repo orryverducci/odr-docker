@@ -22,6 +22,9 @@ services {
 
         label "Birdsong DAB"
         shortlabel "Birdsong"
+
+        pty 12
+        language 9
     }
 
     srv-birdsongplus {
@@ -29,6 +32,9 @@ services {
 
         label "Birdsong DAB+"
         shortlabel "Birdsng+"
+
+        pty 12
+        language 9
     }
 }
 
