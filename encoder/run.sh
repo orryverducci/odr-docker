@@ -28,6 +28,18 @@ if [ $DABPLUS = false ]; then
     DABFLAG="-a"
 fi
 
+# Set DLS text
+
+if [ -z "${ENC_DLS_FILE}" ]; then
+    DLS_FILE="/data/fallback-dls.txt"
+
+    mkdir -p "${DLS_FILE%/*}"
+
+    echo ${ENC_DLS} > $DLS_FILE
+else
+    DLS_FILE="${ENC_DLS_FILE}"
+fi
+
 # Set encoder settings
 
 if [ -z "${ENC_GAIN}" ]; then
@@ -56,4 +68,4 @@ fi
 
 # Run encoder
 
-exec odr-audioenc -v $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -e $MUX "$@"
+odr-padenc -o pad -t $DLS_FILE & exec odr-audioenc -v $SOURCE -g $GAIN $DABFLAG -b $BITRATE -c $CHANNELS -r $SAMPLERATE -p 34 -P pad -e $MUX "$@"

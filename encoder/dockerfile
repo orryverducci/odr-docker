@@ -1,5 +1,5 @@
 ####################
-# Builder stage
+# Audio builder
 ####################
 
 FROM debian:bookworm-slim AS builder-audio
@@ -30,6 +30,34 @@ RUN cd ODR-AudioEnc \
     && make install
 
 ####################
+# PAD builder
+####################
+
+FROM debian:bookworm-slim AS builder-pad
+
+WORKDIR /build
+
+RUN DEBIAN_FRONTEND=noninteractive \
+    && apt-get update \
+    && apt-get install -y \
+    automake \
+    build-essential \
+    git \
+    libtool \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/Opendigitalradio/ODR-PadEnc.git
+
+RUN cd ODR-PadEnc \
+    && ./bootstrap \
+    && ./configure --prefix=/build/output
+
+RUN cd ODR-PadEnc \
+    && make \
+    && make install
+
+####################
 # Runtime image
 ####################
 
@@ -46,6 +74,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder-audio /build/output/bin/odr-audioenc /usr/bin/
+
+COPY --from=builder-pad /build/output/bin/odr-padenc /usr/bin/
 
 COPY --chmod=0755 run.sh /run.sh
 
