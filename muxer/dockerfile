@@ -2,7 +2,7 @@
 # Builder stage
 ####################
 
-FROM debian:bookworm-slim AS builder
+FROM debian:trixie-slim AS builder
 
 WORKDIR /build
 
@@ -33,12 +33,12 @@ RUN cd ODR-DabMux \
 # Runtime image
 ####################
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y \
-    libboost-system1.74.0 \
+    libboost-system1.83.0 \
     libcurl4 \
     libzmq5 \
     && rm -rf /var/lib/apt/lists/*

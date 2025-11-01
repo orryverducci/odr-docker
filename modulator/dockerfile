@@ -2,7 +2,7 @@
 # Builder stage
 ####################
 
-FROM debian:bookworm-slim AS builder
+FROM debian:trixie-slim AS builder
 
 WORKDIR /build
 
@@ -32,14 +32,14 @@ RUN cd ODR-DabMod \
 # Runtime image
 ####################
 
-FROM node:bookworm-slim
+FROM node:trixie-slim
 
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y \
     dumb-init \
     libfftw3-single3 \
-    libuhd4.3.0 \
+    libuhd4.8.0 \
     libzmq5 \
     && rm -rf /var/lib/apt/lists/*
 

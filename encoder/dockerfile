@@ -2,7 +2,7 @@
 # Audio builder
 ####################
 
-FROM debian:bookworm-slim AS builder-audio
+FROM debian:trixie-slim AS builder-audio
 
 WORKDIR /build
 
@@ -34,7 +34,7 @@ RUN cd ODR-AudioEnc \
 # PAD builder
 ####################
 
-FROM debian:bookworm-slim AS builder-pad
+FROM debian:trixie-slim AS builder-pad
 
 WORKDIR /build
 
@@ -62,7 +62,7 @@ RUN cd ODR-PadEnc \
 # Runtime image
 ####################
 
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
